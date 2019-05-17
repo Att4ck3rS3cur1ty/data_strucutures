@@ -1,0 +1,4 @@
+criar uma classe node, do tipo template. Dps vou ter a classe doubly com nodes para o last e o head
+
+// doubly linked list
+each operation will be o(1), except the insertion in the middle e na remoção do meio 
