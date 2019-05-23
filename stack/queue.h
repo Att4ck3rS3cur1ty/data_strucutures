@@ -1,6 +1,7 @@
 #ifndef STACK_H
 #define STACK_H
 
+template <class type>
 class stack{
 	public:
 		void clear();
