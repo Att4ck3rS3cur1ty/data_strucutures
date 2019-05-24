@@ -10,7 +10,9 @@ class Node{
 		Node <T> *m_previous_ptr; // w
 		Node <T> *m_next_ptr;     // w
 	public:
-		Node(); // constructor
+		Node(); // default constructor
+		Node(T e); // param constructor
+    ~Node(); // destructor
 		T getData(); // return data
 		T* getDataPtr(); // return the data's pointer (content's memory address)
 		Node<T> *getPreviousPtr(); // get the previous pointer
@@ -18,14 +20,22 @@ class Node{
 		void setData(T data) // set the data content
 		void setPreviousPtr(Node<T> *previous_ptr); // set the data of the previous pointer
 		void setNextPtr(Node<T> *next_ptr); // set the data of the next pointer
-		~Node(); // destructor
 };
 
 template <typename T>
-Node<T>::Node(){
+Node<T>::Node(){ // constructor
 	m_previous_ptr = NULL;
 	m_next_ptr = NULL;
-} // constructor
+}
+
+template <typename T>
+Node<T>::Node(T e):m_data(e), m_previous_ptr(NULL), m_next_ptr(NULL){ // param constructor
+}
+
+template <typename T>
+Node<T>::~Node(){ // destructor
+
+}
 
 template <typename T>
 T Node<T>:: getData(){ // return data
@@ -60,9 +70,5 @@ void Node<T>::setNextPtr(Node<T> *next_ptr){ // set the data of the next pointer
 	m_next_ptr = next_ptr;
 }
 
-template <typename T>
-Node<T>::~Node(){ // destructor
-
-}
 
 #endif

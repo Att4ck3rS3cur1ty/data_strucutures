@@ -5,13 +5,8 @@
 template <typename T>
 class Dll{
 	private:
-		T m_data_dll;
-		Node<T> *m_start;
-		Node<T> *m_end;
-		Node<T> *m_be4;
-		Node<T> *m_next_dll;
-		bool m_success;
-		int m_k;
+		Node<T>* head;
+		Node<T>* last;
 	public:
 		void clear(); // remove all elements from the list
 		bool empty(); // check if list's empty
@@ -21,7 +16,7 @@ class Dll{
 		void pop_back(); // remove the element from the end of the list
 		Node<T>* front(); // return the element from the beginning of the list without removing it
 		Node<T>* back(); // return the element from the end of the list without removing it
-		Node<T>* size(); // return the element's amount stored in the list
+		int size(); // return the element's amount stored in the list
 		void search(T e); // search for the "e" element in the list
 		void invert(); // invert the list (first becomes last and so on)
 		void traverse(void (*fn)(T&)); // execute the fn procedure for each list items. The procedure receives a reference from the item as a parameter. The execution happens from the first element to the last element
@@ -30,112 +25,172 @@ class Dll{
 		~Dll(); // destructor
 };
 template <typename T>
-void clear(){ // remove all elements from the list
+void Dll::clear(){ // remove all elements from the list
+	Node<T>* temp = new Node();
 
-}
-
-template <typename T>
-bool empty(){ // check if list's empty
-
-}
-
-template <typename T>
-void push_back(T e){ // push a new element in the end of the list
-	Node<T> *pt_new = new Node<T>;
-
-	if (pt_new == NULL) {
-		m_success = false; // I need to return this, just storing for now to not forget it
-	}
-
-	else if ((m_start == NULL) && (m_k != 1) || (m_k < 1)) {
-		delete pt_new;
-		m_success = false; // I need to return this, just storing for now to not forget it
-	}
-
-	else if(k == 1){
-		*(pt_new).getData() = m_data_dll;
-		*(pt_new).getNextPtr() = m_start;
-
-		if(m_start != NULL) {
-			*(m_start).getPreviousPtr() = pt_new;
-			*(pt_new).getPreviousPtr() = NULL;
-			m_success = true; // I need to return this, just storing for now to not forget it
-		}
-	}
-
-	else{
-		m_be4 = m_start;
-
-		while((*(m_be4).getPreviousPtr() != NUL) && (k > 2)){
-			m_be4 = *(m_be4).getNextPtr();
-			m_k = m_k - 1;
-		}
-
-		if(m_k > 2){
-			delete pt_new;
-			m_success = false; // I need to return this, just storing for now to not forget it
-		}
-
-		else{
-			*(pt_new).m_data_dll = *(m_data_).getData();
-			*(pt_new).
-			*(pt_new).
-		}
+	while (temp->getNextPtr == NULL) {
+		head = temp;
+		temp = temp->getNextPtr();
+		delete(head);
 	}
 }
 
 template <typename T>
-void push_front(T e){ // push a new element in the beginning of the list
-
+bool Dll::empty(){ // check if list's empty
+	if (head == NULL) return true;
+	else return false;
 }
 
 template <typename T>
-void pop_front(){ // remove the element from the beginning of the list
+void Dll::push_back(T e){ // push a new element in the end of the list
+	Node<T>* new_node(e) = new Node(); // creating a new Node
 
+	if (head == NULL) { // if that happens, the list was empty
+		//the element inserted needs, then, to be the head and the last
+		head = new_node;
+		last = new_node;
+		new_node->setPreviousPtr(NULL);
+		new_node->setNextPtr(NULL);
+	}
+
+	else{	// the list has elements already
+		// the new element will be inserted at the end of the list
+		last->setNextPtr(new_node);
+		new_node->setPreviousPtr(last);
+		new_node->setNextPtr(NULL);
+		last = new_node;
+	}
 }
 
 template <typename T>
-void pop_back(){ // remove the element from the end of the list
+void Dll::push_front(T e){ // push a new element in the beginning of the list
+	Node<T>* new_node(e) = new Node(); // creating a new Node
+
+	if (head == NULL) { // if that happens, the list was empty
+		//the element inserted needs, then, to be the head and the last
+		head = new_node;
+		last = new_node;
+		new_node->setPreviousPtr(NULL);
+		new_node->setNextPtr(NULL);
+	}
+
+	else{	// the list has elements already
+		// the new element will be inserted at the beginning of the list
+		new_node->setNextPtr(head);
+		head->setPreviousPtr(new_node);
+		new_node->setPreviousPtr(NULL);
+		head = new_node;
+	}
 }
 
 template <typename T>
-Node<T>* front(){ // return the element from the beginning of the list without removing it
+void Dll::pop_front(){ // remove the element from the beginning of the list
+	Node<T>* temp;
+	temp = head;
+	head = head->getNextPtr();
+	delete(temp);
 }
 
 template <typename T>
-Node<T>* back(){ // return the element from the end of the list without removing it
+void Dll::pop_back(){ // remove the element from the end of the list
+	Node<T>* traverse;
+	traverse = head;
+
+	while(traverse->getNextPtr() != NULL){
+		traverse = traverse->getNextPtr(); // goes until the last be4 the next is null
+	}
+
+	traverse->getPreviousPtr()->setNextPtr(NULL);
+	delete(traverse);
 }
 
 template <typename T>
-Node<T>* size(){x // return the element's amount stored in the list
+Node<T>* Dll<T>::front(){ // return the element from the beginning of the list without removing it
+	return head;
 }
 
 template <typename T>
-void search(T e){ // search for the "e" element in the list
+Node<T>* Dll<T>::back(){ // return the element from the end of the list without removing it
+	Node<T>* traverse;
+	traverse = head;
+
+	while(traverse->getNextPtr() != NULL){
+		traverse = traverse->getNextPtr(); // goes until the last be4 the next is null
+	}
+
+	return traverse;
 }
 
 template <typename T>
-void invert(){ // invert the list (first becomes last and so on)
+int Dll::size(){ // return the element's amount stored in the list
+	Node<T>* traverse;
+	traverse = head;
+	int count = 0;
+
+	do {
+		traverse = traverse->getNextPtr(); // goes until the last be4 the next is null
+		count++;
+	} while(traverse != head) // it guarantees that all the list will be searched
+
+	return count;
 }
 
 template <typename T>
-void traverse(void (*fn)(T&)){ // execute the fn procedure for each list items. The procedure receives a reference from the item as a parameter. The execution happens from the first element to the last element
+void Dll::search(T e){ // search for the "e" element in the list
+	Node<T>* traverse(e) = new Node(); // creating a new Node
+	traverse = head;
 
+	while(traverse->getData() != e) {
+		traverse = traverse->getNextPtr();
+		if(traverse->getData() == e) {
+			std::cout << "Found!" << std::endl;
+		}
+	}
+	std::cout << "Not found!" << std::endl;
 }
 
 template <typename T>
-void traverse_inverse(void (*fn)(T&)){ // execute the fn procedure for each list items. The procedure receives a reference from the item as a parameter. The execution happens from the first element to the last element
+void Dll::invert(){ // invert the list (first becomes last and last becomes the first)
+	Node<T>* traverse;
+	traverse = head;
+	last = traverse; // last has the head's value
 
+	while(traverse->getNextPtr() != NULL){
+		traverse = traverse->getNextPtr(); // goes until the last be4 the next is null
+	}
+
+	head = traverse; // head has the last's value
+}
+
+template <typename T>
+void Dll::traverse(void (*fn)(T&)){ // execute the fn procedure for each list items. The procedure receives a reference from the item as a parameter. The execution happens from the first element to the last element
+	Node<T>* traverse;
+	traverse = head;
+
+	do {
+		fn(traverse);
+		traverse = traverse->getNextPtr(); // goes until the last be4 the next is null
+	} while(traverse != head) // it guarantees that all the list will be searched
+}
+
+template <typename T>
+void Dll::traverse_inverse(void (*fn)(T&)){ // execute the fn procedure for each list items. The procedure receives a reference from the item as a parameter. The execution happens from the first element to the last element
+	Node<T>* traverse;
+	traverse = head;
+
+	do {
+		fn(traverse);
+		traverse = traverse->getPreviousPtr(); // goes until the last be4 the next is null
+	} while(traverse != head) // it guarantees that all the list will be searched
 }
 
 template <typename T>
 Dll<T>::Dll{ // constructor
-	m_start = NULL;
-	m_end = NULL;
+	head = NULL;
+	last = NULL;
 }
 
 template <typename T>
-~Dll(){ // destructor
+Dll::~Dll(){ // destructor}
 
-}
 #endif
